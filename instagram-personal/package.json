@@ -1,0 +1,26 @@
+{
+  "name": "personal-instagram",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "14.2.5",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "firebase": "^10.14.1",
+    "html2canvas": "^1.4.1",
+    "gif.js": "^0.2.0",
+    "framer-motion": "^11.0.0",
+    "lucide-react": "^0.400.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}

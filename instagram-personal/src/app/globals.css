@@ -1,0 +1,220 @@
+/* ============================================================
+   Global CSS — الأنماط العامة للموقع
+   ============================================================ */
+
+/* ── Reset ───────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, video { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { background: none; border: none; color: inherit; cursor: pointer; font: inherit; }
+input, textarea { font: inherit; }
+
+/* ── CSS Variables الافتراضية ────────────────────────────── */
+/* يتم تجاوزها ديناميكياً بقيم كل ثيم */
+:root {
+  --bg:           #0a0a0a;
+  --surface:      #141414;
+  --accent:       #c8ff00;
+  --text:         #f0f0f0;
+  --text-muted:   #666666;
+  --font-display: 'Playfair Display', serif;
+  --font-body:    'DM Sans', sans-serif;
+  --radius:       8px;
+  --gap:          12px;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+}
+
+/* ── Layout ──────────────────────────────────────────────── */
+
+/* Desktop: سايدبار + محتوى */
+.site-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  grid-template-rows: auto 1fr;
+  min-height: 100dvh;
+}
+
+/* الهيدر يمتد كامل العرض */
+.site-header {
+  grid-column: 1 / -1;
+  height: 56px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+}
+
+.site-sidebar {
+  border-left: 1px solid rgba(255,255,255,0.08);  /* RTL: border-left */
+  padding: 24px 20px;
+  position: sticky;
+  top: 56px;
+  height: calc(100dvh - 56px);
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.site-sidebar::-webkit-scrollbar { display: none; }
+
+.site-main {
+  padding: 20px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* ── Mobile: مثل انستاغرام تماماً ────────────────────────── */
+@media (max-width: 768px) {
+  .site-layout {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .site-sidebar {
+    position: static;
+    height: auto;
+    border-left: none;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 16px;
+  }
+
+  .site-main {
+    padding: 12px;
+  }
+
+  /* Bottom Nav على الجوال */
+  .mobile-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0; right: 0;
+    height: 56px;
+    background: var(--bg);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    z-index: 200;
+  }
+
+  body { padding-bottom: 56px; }
+}
+
+@media (min-width: 769px) {
+  .mobile-nav { display: none; }
+}
+
+/* ── Tabs / النوافذ ──────────────────────────────────────── */
+.tabs-bar {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 4px;
+  margin-bottom: 16px;
+}
+.tabs-bar::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: all 0.2s;
+  border: 1px solid rgba(255,255,255,0.15);
+  opacity: 0.6;
+}
+.tab-btn.active {
+  background: var(--accent);
+  color: #000;
+  border-color: var(--accent);
+  opacity: 1;
+  font-weight: 700;
+}
+
+/* ── Carousel Card ───────────────────────────────────────── */
+.carousel-card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.carousel-card:hover { transform: scale(1.02); }
+
+/* ── Modal / Overlay ─────────────────────────────────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  backdrop-filter: blur(8px);
+}
+
+/* ── Texture grain ───────────────────────────────────────── */
+/* يُضاف على الخلفيات التي تدعم grain */
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.04;
+  z-index: 9999;
+}
+
+/* ── Glassmorphism ───────────────────────────────────────── */
+.glass-card {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* ── Scrollbar custom ────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+
+/* ── Animations ──────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes typewriter {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+.anim-fade-in  { animation: fadeIn  var(--dur,0.5s) var(--delay,0s) both; }
+.anim-slide-up { animation: slideUp var(--dur,0.6s) var(--delay,0s) both; }
+.anim-scale-in { animation: scaleIn var(--dur,0.4s) var(--delay,0s) both; }
